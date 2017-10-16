@@ -1,6 +1,8 @@
 ---
-- name: awx | testing
+
+- name: awx | update
   hosts: all
+  gather_facts: True
 
   tasks:
 
@@ -9,3 +11,12 @@
     yum:
       name: '*'
       state: latest
+    when: ansible_os_family == "RedHat"
+
+  - name: apt | update
+    become: True
+    apt:
+      upgrade: dist
+      update_cache: yes
+      cache_valid_time: 3600
+    when: ansible_os_family == "Debian"
