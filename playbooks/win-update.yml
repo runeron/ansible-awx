@@ -1,0 +1,20 @@
+---
+- name: awx | windows update
+  hosts: all
+
+  tasks:
+
+  - name: update | security
+    win_updates:
+      category_names:
+        - SecurityUpdates
+      state: installed
+      log_path: c:\ansible_wu.log
+    register: update_status
+
+  - name: update | reboot
+    win_reboot:
+      shutdown_timeout: 300
+      reboot_timeout: 900
+      msg: Reboot initiated by Ansible
+    when: update_status.reboot_required
