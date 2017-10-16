@@ -1,6 +1,10 @@
 ---
+- name: awx | testing
+  hosts: all
 
-- name: yum | update
-  yum:
-    name: '*'
-    state: latest
+  tasks:
+
+  - name: yum | update
+    yum:
+      name: '*'
+      state: latest
