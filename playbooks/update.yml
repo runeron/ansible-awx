@@ -23,21 +23,3 @@
         update_cache: yes
         cache_valid_time: 3600
     when: ansible_os_family == "Debian"
-
-  - block:
-    - name: win_updates | update
-      win_updates:
-        category_names:
-          - SecurityUpdates
-          - DefinitionUpdates
-        state: installed
-        log_path: c:\ansible_wu.log
-      register: wu_result
-
-      - name: win_reboot | reboot after update
-        win_reboot:
-          shutdown_timeout: 600
-          reboot_timeout: 900
-        when: wu_result.reboot_required
-
-    when: ansible_os_family == "Windows"
